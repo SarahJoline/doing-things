@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 import styled from "styled-components";
 import { CheckmarkIcon, PlusIcon, TrashIcon } from "../Icons";
@@ -60,6 +61,20 @@ export const StyledSubtaskContainer = styled.div`
 `;
 
 function ListItem({ item }) {
+  async function getTodos(id) {
+    try {
+      await axios
+        .request({
+          method: "DELETE",
+          url: `/api/todos/${id}`,
+        })
+        .then((res) => {
+          console.log(res);
+        });
+    } catch (e) {
+      console.log(e);
+    }
+  }
   return (
     <StyledListItem>
       <StyledMainTaskContainer>
@@ -74,7 +89,12 @@ function ListItem({ item }) {
           <PlusIcon width="40" height="40" stroke="darkseagreen" />
         </StyledButton>
         <StyledButton>
-          <TrashIcon width="20" height="20" stroke="red" />
+          <TrashIcon
+            width="20"
+            height="20"
+            stroke="red"
+            onClick={() => getTodos(item.id)}
+          />
         </StyledButton>
       </StyledMainTaskContainer>
       <StyledSubtaskContainer>
