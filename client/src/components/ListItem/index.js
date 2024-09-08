@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { TrashIcon } from "../Icons/trashIcon";
+import { CheckmarkIcon, PlusIcon, TrashIcon } from "../Icons";
+import SubtaskCard from "../SubtaskCard";
 
 export const StyledListItem = styled.div`
   margin: 10px;
@@ -10,7 +11,13 @@ export const StyledListItem = styled.div`
   background-color: white;
   display: flex;
   padding: 0 20px;
-  align-items: baseline;
+  flex-direction: column;
+`;
+
+export const StyledMainTaskContainer = styled.div`
+  display: flex;
+
+  align-items: center;
   justify-content: space-between;
 `;
 
@@ -26,6 +33,9 @@ export const StyledButton = styled.button`
   border: none;
   background: transparent;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const StyledProgressBar = styled.div`
@@ -43,17 +53,35 @@ export const StyledCompletionBar = styled.div`
   height: 10px;
 `;
 
+export const StyledSubtaskContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+`;
+
 function ListItem({ item }) {
   return (
     <StyledListItem>
-      <StyledTitle>{item.title}</StyledTitle>
-      <StyledProgressBar>
-        <StyledCompletionBar progress={item.progress} />
-      </StyledProgressBar>
-      <StyledButton>completed</StyledButton>
-      <StyledButton>
-        <TrashIcon width="20" height="20" stroke="red" />
-      </StyledButton>
+      <StyledMainTaskContainer>
+        <StyledTitle>{item.title}</StyledTitle>
+        <StyledProgressBar>
+          <StyledCompletionBar progress={item.progress} />
+        </StyledProgressBar>
+        <StyledButton>
+          <CheckmarkIcon width="40" height="40" stroke="darkseagreen" />
+        </StyledButton>
+        <StyledButton>
+          <PlusIcon width="40" height="40" stroke="darkseagreen" />
+        </StyledButton>
+        <StyledButton>
+          <TrashIcon width="20" height="20" stroke="red" />
+        </StyledButton>
+      </StyledMainTaskContainer>
+      <StyledSubtaskContainer>
+        {item.subtasks.map((subtask) => {
+          return <SubtaskCard subtask={subtask} />;
+        })}
+      </StyledSubtaskContainer>
     </StyledListItem>
   );
 }
