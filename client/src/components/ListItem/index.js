@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { TrashIcon } from "../Icons/trashIcon";
 
 export const StyledListItem = styled.div`
   margin: 10px;
@@ -50,7 +51,9 @@ function ListItem({ item }) {
         <StyledCompletionBar progress={item.progress} />
       </StyledProgressBar>
       <StyledButton>completed</StyledButton>
-      <StyledButton>trash</StyledButton>
+      <StyledButton>
+        <TrashIcon width="20" height="20" stroke="red" />
+      </StyledButton>
     </StyledListItem>
   );
 }
