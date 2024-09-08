@@ -1,9 +1,13 @@
 import axios from "axios";
 import React, { useEffect } from "react";
+import styled from "styled-components";
 import "./App.css";
 import List from "./components/List";
-import Modal from "./components/Modal";
 import NavBar from "./components/NavBar";
+
+export const StyledContainer = styled.div`
+  background-color: aliceblue;
+`;
 
 function App() {
   async function getTodos() {
@@ -25,12 +29,12 @@ function App() {
     getTodos();
   }, []);
   return (
-    <div className="App">
+    <StyledContainer className="App">
       <NavBar />
-      <Modal />
-      <button>Add task</button>
+      {/* <Modal /> */}
+
       <List />
-    </div>
+    </StyledContainer>
   );
 }
 
