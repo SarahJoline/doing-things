@@ -1,25 +1,39 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ListItem from "../ListItem";
 
 export const StyledList = styled.div`
   display: flex;
-  flex-wrap: true;
-  width: 100%;
+  height: 100vh;
+  flex-direction: column;
   padding: 40px;
 `;
 
 function List() {
-  const list = [
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-  ];
+  const [data, setData] = useState([]);
+  async function getTodos() {
+    try {
+      await axios
+        .request({
+          method: "GET",
+          url: "/api/todos",
+        })
+        .then(({ data }) => {
+          setData(data);
+        });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  useEffect(() => {
+    getTodos();
+  }, []);
+
   return (
     <StyledList>
-      {list.map((item) => {
+      {data.map((item) => {
         return <ListItem item={item} />;
       })}
     </StyledList>
