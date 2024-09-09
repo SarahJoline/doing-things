@@ -3,14 +3,13 @@ import styled from "styled-components";
 import { CloseIcon } from "../Icons";
 
 export const StyledModalBackdrop = styled.div`
-  opacity: 0.5;
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
   z-index: 2;
-  background: #000;
+  background: rgb(0, 0, 0, 0.5);
   transition: opacity 0.25s ease;
 `;
 
@@ -24,6 +23,7 @@ export const StyledModalContainer = styled.div`
   left: 50%;
   transform: translateX(-50%);
   width: 80vw;
+  height: 80vh;
   padding: 20px;
   z-index: 10;
   padding: 20px;
@@ -31,6 +31,7 @@ export const StyledModalContainer = styled.div`
   border: 1px darkseagreen solid;
   border-radius: 10px;
   flex-direction: column;
+  opacity: 1 !important;
 `;
 
 export const ModalHeader = styled.div`
@@ -66,7 +67,7 @@ function Modal({ setOpen }) {
       <StyledModalContainer>
         <ModalHeader>
           <StyledButton onClick={() => setOpen(false)}>
-            <CloseIcon width="40px" height="40px" stroke="darkseagreen" />
+            <CloseIcon width="30px" height="30px" stroke="darkseagreen" />
           </StyledButton>
         </ModalHeader>
         <StyledModal>
