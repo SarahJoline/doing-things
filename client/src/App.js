@@ -1,8 +1,9 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import "./App.css";
 import List from "./components/List";
+import Modal from "./components/Modal";
 import NavBar from "./components/NavBar";
 
 export const StyledContainer = styled.div`
@@ -10,6 +11,7 @@ export const StyledContainer = styled.div`
 `;
 
 function App() {
+  const [open, setOpen] = useState(false);
   async function getTodos() {
     try {
       await axios
@@ -31,7 +33,8 @@ function App() {
   return (
     <StyledContainer className="App">
       <NavBar />
-      {/* <Modal /> */}
+      <button onClick={() => setOpen(!open)}>Add Task</button>
+      {open && <Modal setOpen={setOpen} />}
 
       <List />
     </StyledContainer>
