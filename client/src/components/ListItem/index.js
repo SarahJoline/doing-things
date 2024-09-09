@@ -75,6 +75,17 @@ function ListItem({ item }) {
       console.log(e);
     }
   }
+
+  async function markTodoAsComplete(id) {
+    try {
+      await axios.put(`/api/todos/${id}`, { progress: 100 }).then((res) => {
+        console.log(res);
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  console.log(item);
   return (
     <StyledListItem>
       <StyledMainTaskContainer>
@@ -83,7 +94,12 @@ function ListItem({ item }) {
           <StyledCompletionBar progress={item.progress} />
         </StyledProgressBar>
         <StyledButton>
-          <CheckmarkIcon width="40" height="40" stroke="darkseagreen" />
+          <CheckmarkIcon
+            width="40"
+            height="40"
+            stroke="darkseagreen"
+            onClick={() => markTodoAsComplete(item.id)}
+          />
         </StyledButton>
         <StyledButton>
           <PlusIcon width="40" height="40" stroke="darkseagreen" />
