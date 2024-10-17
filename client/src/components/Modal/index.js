@@ -83,6 +83,7 @@ function Modal({ setOpen }) {
     const payload = {
       title,
       is_recurring,
+      progress: 0,
       recurs_every,
       subtasks,
     };
