@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 import styled from "styled-components";
 import { CloseIcon } from "../Icons";
@@ -61,7 +62,41 @@ export const StyledModal = styled.div`
   margin: auto;
 `;
 
+export const StyledTitleInput = styled.div``;
+
 function Modal({ setOpen }) {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const title = formData.get("title");
+    const is_recurring =
+      formData.get("is-recurring") === "recurring" ? true : false;
+    const recurs_every = formData.get("recurs_every") || null;
+    const subtasks = [
+      formData.get("subtask-1"),
+      formData.get("subtask-2"),
+      formData.get("subtask-3"),
+      formData.get("subtask-4"),
+    ].filter((subtask) => subtask); // filter out any null/empty subtasks
+
+    const payload = {
+      title,
+      is_recurring,
+      recurs_every,
+      subtasks,
+    };
+
+    try {
+      await axios.request({
+        method: "POST",
+        url: "/api/todos",
+        data: payload,
+      });
+    } catch (error) {
+      console.error("Error submitting the form:", error);
+    }
+  };
   return (
     <StyledModalBackdrop>
       <StyledModalContainer>
@@ -71,11 +106,11 @@ function Modal({ setOpen }) {
           </StyledButton>
         </ModalHeader>
         <StyledModal>
-          <form>
-            <div>
-              <label htmlFor="task-name">Name the task:</label>
-              <input type="text" id="task-name" />
-            </div>
+          <form onSubmit={handleSubmit}>
+            <StyledTitleInput>
+              <label htmlFor="task-title">Task:</label>
+              <input type="text" id="task-title" name="title" />
+            </StyledTitleInput>
             <div>
               <input
                 type="radio"
@@ -87,19 +122,25 @@ function Modal({ setOpen }) {
               <input
                 type="radio"
                 name="is-recurring"
-                value="Recurring"
+                value="recurring"
                 id="recurring"
               />
               <label htmlFor="recurring">Reccuring</label>
             </div>
-            <label htmlFor="task-frequency">Do this task once a:</label>
-            <select name="task-frequency" id="task-frequency">
+            <label htmlFor="recurs_every">Do this task once a:</label>
+            <select name="recurs_every" id="recurs_every">
               <option value="">--Please choose an option--</option>
               <option value="day">Day</option>
               <option value="week">Week</option>
               <option value="month">Month</option>
             </select>
-
+            <StyledTitleInput>
+              <label htmlFor="add-subtasks">Add A Subtask</label>
+              <input type="text" id="add-subtasks" name="subtask-1" />
+              <input type="text" id="add-subtasks" name="subtask-2" />
+              <input type="text" id="add-subtasks" name="subtask-3" />
+              <input type="text" id="add-subtasks" name="subtask-4" />
+            </StyledTitleInput>
             <button>submit</button>
           </form>
         </StyledModal>
