@@ -1,5 +1,5 @@
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { CloseIcon } from "../Icons";
 
@@ -42,7 +42,7 @@ export const ModalHeader = styled.div`
   align-items: center;
 `;
 
-export const StyledButton = styled.button`
+export const StyledTransparentButton = styled.button`
   border: none;
   background: transparent;
   cursor: pointer;
@@ -62,9 +62,62 @@ export const StyledModal = styled.div`
   margin: auto;
 `;
 
-export const StyledTitleInput = styled.div``;
+const StyledTitle = styled.h1`
+  font-size: 25px;
+  color: teal;
+  font-weight: 500;
+`;
+
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+`;
+
+const StyledLabel = styled.label`
+  color: black;
+  font-size: 18px;
+`;
+
+const StyledSubtaskContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+const StyledTextInput = styled.input`
+  border: none;
+  border-bottom: 1px solid teal;
+  outline: none;
+  font-size: 18px;
+
+  &:focus {
+    outline: 2px solid #8fbc8f;
+    padding: 3px;
+    border-radius: 3px;
+  }
+`;
+
+const StyledButton = styled.button`
+  border: 1px solid darkseagreen;
+  background-color: darkseagreen;
+  color: white;
+  border-radius: 3px;
+  padding: 15px 20px;
+  font-size: 20px;
+  font-weight: 500px;
+  cursor: pointer;
+  width: fit-content;
+  align-self: center;
+
+  &:hover {
+    border: 1px solid #9bbf9b;
+    background-color: #9bbf9b;
+  }
+`;
 
 function Modal({ setOpen }) {
+  const [isRecurring, setIsRecurring] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -102,48 +155,58 @@ function Modal({ setOpen }) {
     <StyledModalBackdrop>
       <StyledModalContainer>
         <ModalHeader>
-          <StyledButton onClick={() => setOpen(false)}>
+          <StyledTransparentButton onClick={() => setOpen(false)}>
             <CloseIcon width="30px" height="30px" stroke="darkseagreen" />
-          </StyledButton>
+          </StyledTransparentButton>
         </ModalHeader>
         <StyledModal>
-          <form onSubmit={handleSubmit}>
-            <StyledTitleInput>
-              <label htmlFor="task-title">Task:</label>
-              <input type="text" id="task-title" name="title" />
-            </StyledTitleInput>
+          <StyledTitle>Add a task</StyledTitle>
+          <StyledForm onSubmit={handleSubmit}>
+            <div>
+              <StyledLabel htmlFor="task-title">Task:</StyledLabel>
+              <StyledTextInput type="text" id="task-title" name="title" />
+            </div>
             <div>
               <input
                 type="radio"
                 name="is-recurring"
                 value="onetime"
                 id="onetime"
+                onClick={() => setIsRecurring(false)}
               />
-              <label htmlFor="onetime">One Time</label>
+              <StyledLabel htmlFor="onetime">One Time</StyledLabel>
               <input
                 type="radio"
                 name="is-recurring"
                 value="recurring"
                 id="recurring"
+                onClick={() => setIsRecurring(true)}
               />
-              <label htmlFor="recurring">Reccuring</label>
+              <StyledLabel htmlFor="recurring">Reccuring</StyledLabel>
             </div>
-            <label htmlFor="recurs_every">Do this task once a:</label>
-            <select name="recurs_every" id="recurs_every">
-              <option value="">--Please choose an option--</option>
-              <option value="day">Day</option>
-              <option value="week">Week</option>
-              <option value="month">Month</option>
-            </select>
-            <StyledTitleInput>
-              <label htmlFor="add-subtasks">Add A Subtask</label>
-              <input type="text" id="add-subtasks" name="subtask-1" />
-              <input type="text" id="add-subtasks" name="subtask-2" />
-              <input type="text" id="add-subtasks" name="subtask-3" />
-              <input type="text" id="add-subtasks" name="subtask-4" />
-            </StyledTitleInput>
-            <button>submit</button>
-          </form>
+            {isRecurring && (
+              <>
+                <StyledLabel htmlFor="recurs_every">
+                  Do this task once a:
+                </StyledLabel>
+                <select name="recurs_every" id="recurs_every">
+                  <option value="">Select frequency</option>
+                  <option value="day">Day</option>
+                  <option value="week">Week</option>
+                  <option value="month">Month</option>
+                </select>
+              </>
+            )}
+
+            <StyledSubtaskContainer>
+              <StyledLabel htmlFor="add-subtasks">Add A Subtask</StyledLabel>
+              <StyledTextInput type="text" id="add-subtasks" name="subtask-1" />
+              <StyledTextInput type="text" id="add-subtasks" name="subtask-2" />
+              <StyledTextInput type="text" id="add-subtasks" name="subtask-3" />
+              <StyledTextInput type="text" id="add-subtasks" name="subtask-4" />
+            </StyledSubtaskContainer>
+            <StyledButton>Submit</StyledButton>
+          </StyledForm>
         </StyledModal>
       </StyledModalContainer>
     </StyledModalBackdrop>
