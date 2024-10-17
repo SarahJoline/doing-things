@@ -1,8 +1,9 @@
 import axios from "axios";
 import React from "react";
 import styled from "styled-components";
-import { CheckmarkIcon, PlusIcon, TrashIcon } from "../Icons";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
 import SubtaskCard from "../SubtaskCard";
+import ButtonContainer from "./ButtonContainer";
 
 export const StyledListItem = styled.div`
   margin: 10px;
@@ -11,23 +12,30 @@ export const StyledListItem = styled.div`
   min-height: 50px;
   background-color: white;
   display: flex;
-  padding: 0 20px;
+  padding: 0 10px;
   flex-direction: column;
+
+  @media (min-width: 768px) {
+    padding: 0 20px;
+  }
 `;
 
 export const StyledMainTaskContainer = styled.div`
   display: flex;
-
   align-items: center;
   justify-content: space-between;
 `;
 
 export const StyledTitle = styled.h1`
   color: teal;
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 500;
   width: 40%;
   text-align: left;
+
+  @media (min-width: 768px) {
+    font-size: 20px;
+  }
 `;
 
 export const StyledButton = styled.button`
@@ -60,32 +68,26 @@ export const StyledSubtaskContainer = styled.div`
   align-items: flex-start;
 `;
 
-function ListItem({ item }) {
-  async function getTodos(id) {
-    try {
-      await axios
-        .request({
-          method: "DELETE",
-          url: `/api/todos/${id}`,
-        })
-        .then((res) => {
-          console.log(res);
-        });
-    } catch (e) {
-      console.log(e);
-    }
+const StyledButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  @media (min-width: 768px) {
+    flex-direction: row;
   }
+`;
 
-  async function markTodoAsComplete(id) {
+function ListItem({ item }) {
+  const isMobile = useMediaQuery("(max-width: 768px)");
+
+  async function addSubtask(id, subtask) {
     try {
-      await axios.put(`/api/todos/${id}`, { progress: 100 }).then((res) => {
+      await axios.put(`/api/todos/${id}`, { subtasks: subtask }).then((res) => {
         console.log(res);
       });
     } catch (e) {
       console.log(e);
     }
   }
-  console.log(item);
   return (
     <StyledListItem>
       <StyledMainTaskContainer>
@@ -93,31 +95,16 @@ function ListItem({ item }) {
         <StyledProgressBar>
           <StyledCompletionBar progress={item.progress} />
         </StyledProgressBar>
-        <StyledButton>
-          <CheckmarkIcon
-            width="40"
-            height="40"
-            stroke="darkseagreen"
-            onClick={() => markTodoAsComplete(item.id)}
-          />
-        </StyledButton>
-        <StyledButton>
-          <PlusIcon width="40" height="40" stroke="darkseagreen" />
-        </StyledButton>
-        <StyledButton>
-          <TrashIcon
-            width="20"
-            height="20"
-            stroke="red"
-            onClick={() => getTodos(item.id)}
-          />
-        </StyledButton>
+        {!isMobile && <ButtonContainer id={item.id} />}
       </StyledMainTaskContainer>
-      <StyledSubtaskContainer>
-        {item.subtasks.map((subtask) => {
-          return <SubtaskCard subtask={subtask} />;
-        })}
-      </StyledSubtaskContainer>
+      <div>
+        <StyledSubtaskContainer>
+          {item.subtasks.map((subtask) => {
+            return <SubtaskCard subtask={subtask} />;
+          })}
+        </StyledSubtaskContainer>
+        {isMobile && <ButtonContainer id={item.id} />}
+      </div>
     </StyledListItem>
   );
 }
