@@ -1,9 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import { CheckmarkIcon } from "../Icons";
 
 export const StyledButton = styled.button`
-  border: 1px darkseagreen solid;
-  border-radius: 3px;
+  // border: 1px darkseagreen solid;
+  // border-radius: 3px;
+  border: none;
   background: transparent;
   cursor: pointer;
   display: flex;
@@ -20,8 +22,12 @@ export const StyledSubtaskCard = styled.div`
 `;
 
 export const StyledSubtaskTitle = styled.h2`
-  font-size: 15px;
+  font-size: 10px;
   color: dimgray;
+
+  @media (min-width: 768px) {
+    font-size: 15px;
+  }
 `;
 
 function SubtaskCard({ subtask }) {
@@ -29,13 +35,12 @@ function SubtaskCard({ subtask }) {
     <StyledSubtaskCard>
       <StyledSubtaskTitle>{subtask}</StyledSubtaskTitle>
       <StyledButton>
-        mark as completed
-        {/* <CheckmarkIcon
-          width="20"
-          height="20"
-          stroke="white"
-          fill="darkseagreen"
-        /> */}
+        <CheckmarkIcon
+          width="30"
+          height="30"
+          stroke="darkseagreen"
+          fill="white"
+        />
       </StyledButton>
     </StyledSubtaskCard>
   );
