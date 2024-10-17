@@ -14,10 +14,8 @@ const StyledButton = styled.button`
 
 const StyledButtonContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  @media (min-width: 768px) {
-    flex-direction: row;
-  }
+  flex-direction: row;
+  justify-content: flex-end;
 `;
 
 function ButtonContainer({ id }) {
