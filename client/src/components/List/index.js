@@ -5,9 +5,13 @@ import ListItem from "../ListItem";
 
 export const StyledList = styled.div`
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   flex-direction: column;
-  padding: 40px;
+  padding: 10px;
+
+  @media (min-width: 768px) {
+    padding: 40px;
+  }
 `;
 
 function List() {
