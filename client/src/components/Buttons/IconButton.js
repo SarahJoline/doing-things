@@ -8,6 +8,6 @@ export const StyledIconButton = styled.button`
   cursor: pointer;
 `;
 
-export function IconButton({ children }) {
-  return <StyledIconButton>{children}</StyledIconButton>;
+export function IconButton({ handleClick, children }) {
+  return <StyledIconButton onClick={handleClick}>{children}</StyledIconButton>;
 }
