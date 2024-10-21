@@ -3,13 +3,13 @@ import styled from "styled-components";
 import { IconButton } from "../Buttons/IconButton";
 import { PlusIcon } from "../Icons";
 export const StyledHeader = styled.header`
-  width: 100%;
   height: 10vh;
   background-color: teal;
   min-height: 60px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  padding: 0 20px;
 `;
 
 export const StyledTitle = styled.h1`
@@ -18,9 +18,14 @@ export const StyledTitle = styled.h1`
   margin: 0;
 `;
 
+export const StyledSpaceHolder = styled.h1`
+  width: 40px;
+`;
+
 function NavBar() {
   return (
     <StyledHeader>
+      <StyledSpaceHolder />
       <StyledTitle>OmList</StyledTitle>
       <IconButton>
         <PlusIcon width="40" height="40" stroke="white" />
