@@ -32,8 +32,7 @@ function App() {
   }, []);
   return (
     <StyledContainer className="App">
-      <NavBar />
-      <button onClick={() => setOpen(!open)}>Add Task</button>
+      <NavBar open={open} setOpen={setOpen} />
       {open && <Modal setOpen={setOpen} />}
 
       <List />
