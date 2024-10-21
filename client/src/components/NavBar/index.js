@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { IconButton } from "../Buttons/IconButton";
+import { PlusIcon } from "../Icons";
 export const StyledHeader = styled.header`
   width: 100%;
   height: 10vh;
@@ -21,7 +22,9 @@ function NavBar() {
   return (
     <StyledHeader>
       <StyledTitle>OmList</StyledTitle>
-      <IconButton icon="Hello" />
+      <IconButton>
+        <PlusIcon width="40" height="40" stroke="white" />
+      </IconButton>
     </StyledHeader>
   );
 }
