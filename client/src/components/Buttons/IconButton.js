@@ -5,12 +5,9 @@ export const StyledIconButton = styled.button`
   background-color: transparent;
   padding: 0;
   border: 0;
+  cursor: pointer;
 `;
 
-export function IconButton({ icon: Icon }) {
-  return (
-    <StyledIconButton>
-      <Icon />
-    </StyledIconButton>
-  );
+export function IconButton({ children }) {
+  return <StyledIconButton>{children}</StyledIconButton>;
 }
