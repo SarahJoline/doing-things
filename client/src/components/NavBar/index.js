@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { IconButton } from "../Buttons/IconButton";
 import { PlusIcon } from "../Icons";
+
 export const StyledHeader = styled.header`
   height: 10vh;
   background-color: teal;
@@ -22,12 +23,12 @@ export const StyledSpaceHolder = styled.h1`
   width: 40px;
 `;
 
-function NavBar() {
+function NavBar({ open, setOpen }) {
   return (
     <StyledHeader>
       <StyledSpaceHolder />
       <StyledTitle>OmList</StyledTitle>
-      <IconButton>
+      <IconButton handleClick={() => setOpen(!open)}>
         <PlusIcon width="40" height="40" stroke="white" />
       </IconButton>
     </StyledHeader>
