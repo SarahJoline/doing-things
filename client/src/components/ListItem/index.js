@@ -100,7 +100,7 @@ function ListItem({ item }) {
       <div>
         <StyledSubtaskContainer>
           {item.subtasks?.map((subtask) => {
-            return <SubtaskCard subtask={subtask} />;
+            return subtask !== null && <SubtaskCard subtask={subtask} />;
           })}
         </StyledSubtaskContainer>
         {isMobile && <ButtonContainer id={item.id} />}
