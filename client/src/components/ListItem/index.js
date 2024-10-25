@@ -91,7 +91,7 @@ function ListItem({ item }) {
   return (
     <StyledListItem>
       <StyledMainTaskContainer>
-        <StyledTitle>{item.title}</StyledTitle>
+        <StyledTitle>{item.name}</StyledTitle>
         <StyledProgressBar>
           <StyledCompletionBar progress={item.progress} />
         </StyledProgressBar>
@@ -99,7 +99,7 @@ function ListItem({ item }) {
       </StyledMainTaskContainer>
       <div>
         <StyledSubtaskContainer>
-          {item.subtasks.map((subtask) => {
+          {item.subtasks?.map((subtask) => {
             return <SubtaskCard subtask={subtask} />;
           })}
         </StyledSubtaskContainer>
