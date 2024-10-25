@@ -133,20 +133,24 @@ function Modal({ setOpen }) {
       formData.get("subtask-4"),
     ].filter((subtask) => subtask); // filter out any null/empty subtasks
 
+    //TODO: GET USER_ID FROM LOCALSTORAGE
     const payload = {
       name,
       is_recurring,
       progress: 0,
       frequency,
-      user_id: "user@example.com",
+      user_id: "sarah@example.com",
+      subtasks,
     };
 
+    //TODO DO SOMETHING WITH THE CONSTANT HERE. REDUX
     try {
-      await axios.request({
+      const todo = await axios.request({
         method: "POST",
         url: "/api/todos",
         data: payload,
       });
+
       setOpen(false);
     } catch (error) {
       console.error("Error submitting the form:", error);
