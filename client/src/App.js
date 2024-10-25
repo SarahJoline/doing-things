@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import "./App.css";
+import AuthHelperMethods from "./auth";
+import Register from "./components/Forms/Register";
 import List from "./components/List";
 import Modal from "./components/Modal";
 import NavBar from "./components/NavBar";
@@ -11,7 +13,9 @@ export const StyledContainer = styled.div`
 `;
 
 function App() {
+  const isLoggedIn = AuthHelperMethods.loggedIn();
   const [open, setOpen] = useState(false);
+  console.log(isLoggedIn);
   async function getTodos() {
     try {
       await axios
@@ -35,7 +39,8 @@ function App() {
       <NavBar open={open} setOpen={setOpen} />
       {open && <Modal setOpen={setOpen} />}
 
-      <List />
+      {!!isLoggedIn && <List />}
+      {!isLoggedIn && <Register />}
     </StyledContainer>
   );
 }
