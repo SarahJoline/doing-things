@@ -1,6 +1,40 @@
 const express = require("express");
+const TOKEN = process.env.TOKEN_SECRET;
 const router = express.Router();
 const pool = require("../db");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+
+router.post("/user", async (req, res) => {
+  const { email, name, password } = req.body;
+
+  // Hash the password before saving it to the database
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  try {
+    const result = await pool.query(
+      `INSERT INTO users (email, name, hashed_password) VALUES ($1, $2, $3) RETURNING *`,
+      [email, name, hashedPassword]
+    );
+
+    let token = jwt.sign(
+      {
+        email: result.email,
+        userID: result._id,
+      },
+      TOKEN,
+      { expiresIn: 129600 }
+    );
+
+    res.status(201).json({
+      message: "User created successfully",
+      token,
+    });
+  } catch (error) {
+    console.error("Error creating user:", error);
+    res.status(500).json({ message: "Error creating user" });
+  }
+});
 
 router.get("/todos", async (req, res) => {
   try {
