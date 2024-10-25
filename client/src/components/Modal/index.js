@@ -122,10 +122,10 @@ function Modal({ setOpen }) {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
-    const title = formData.get("title");
+    const name = formData.get("title");
     const is_recurring =
       formData.get("is-recurring") === "recurring" ? true : false;
-    const recurs_every = formData.get("recurs_every") || null;
+    const frequency = formData.get("recurs_every") || null;
     const subtasks = [
       formData.get("subtask-1"),
       formData.get("subtask-2"),
@@ -134,11 +134,11 @@ function Modal({ setOpen }) {
     ].filter((subtask) => subtask); // filter out any null/empty subtasks
 
     const payload = {
-      title,
+      name,
       is_recurring,
       progress: 0,
-      recurs_every,
-      subtasks,
+      frequency,
+      user_id: "user@example.com",
     };
 
     try {
