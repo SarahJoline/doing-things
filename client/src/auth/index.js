@@ -28,7 +28,7 @@ AuthHelperMethods.loggedIn = () => {
   // Checks if there is a saved token and it's still valid
   const token = AuthHelperMethods.getToken(); // Getting token from localstorage
 
-  //The double exclamation is a way to cast the variable to a boolean, allowing you to easily check if the token exusts.
+  //The double exclamation is a way to cast the variable to a boolean, allowing you to easily check if the token exists.
   return !!token && !AuthHelperMethods.isTokenExpired(token); // handwaiving here
 };
 
