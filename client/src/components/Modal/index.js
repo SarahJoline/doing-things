@@ -147,6 +147,7 @@ function Modal({ setOpen }) {
         url: "/api/todos",
         data: payload,
       });
+      setOpen(false);
     } catch (error) {
       console.error("Error submitting the form:", error);
     }
