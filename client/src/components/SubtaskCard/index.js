@@ -33,8 +33,8 @@ export const StyledSubtaskTitle = styled.h2`
 function SubtaskCard({ subtask }) {
   return (
     <StyledSubtaskCard>
-      <StyledSubtaskTitle>{subtask}</StyledSubtaskTitle>
-      <StyledButton>
+      <StyledSubtaskTitle>{subtask?.name}</StyledSubtaskTitle>
+      <StyledButton onClick={() => markSubtaskAsCompleted(subtask?.id)}>
         <CheckmarkIcon
           width="30"
           height="30"
