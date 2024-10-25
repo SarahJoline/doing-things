@@ -47,17 +47,37 @@ router.get("/todos", async (req, res) => {
 
 router.post("/todos", async (req, res) => {
   try {
-    const fields = Object.keys(req.body);
-    const values = Object.values(req.body);
+    const { subtasks, ...todo } = req.body;
+    const fields = Object.keys(todo);
+    const values = Object.values(todo);
 
     const columns = fields.join(", ");
     const placeholders = fields.map((_, index) => `$${index + 1}`).join(", ");
 
     const query = `INSERT INTO todos (${columns}) VALUES (${placeholders}) RETURNING *`;
 
-    const result = await pool.query(query, values);
+    const todoResult = await pool.query(query, values);
 
-    res.json(result.rows[0]);
+    if (subtasks && subtasks.length > 0) {
+      const subtaskValues = [];
+      const subtaskPlaceholders = subtasks
+        .map((subtask, i) => {
+          const offset = i * 3;
+          subtaskValues.push(subtask, todoResult.rows[0].id, i + 1); // Add subtask name, todo_id, and sort_order
+          return `($${offset + 1}, $${offset + 2}, $${offset + 3})`;
+        })
+        .join(", ");
+
+      // Insert all subtasks and capture the result
+      const subtaskQuery = `
+        INSERT INTO subtasks (name, todo_id, sort_order) 
+        VALUES ${subtaskPlaceholders}
+        RETURNING *`;
+      const subtaskResult = await pool.query(subtaskQuery, subtaskValues);
+      console.log(subtaskResult.rows);
+    }
+
+    res.json({ todo: todoResult.rows });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to add todo" });
