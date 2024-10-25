@@ -38,7 +38,9 @@ router.post("/user", async (req, res) => {
 
 router.get("/todos", async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM todos");
+    const result = await pool.query(
+      "SELECT todos.*, json_agg(subtasks) AS subtasks FROM todos LEFT JOIN subtasks ON subtasks.todo_id = todos.id GROUP BY todos.id"
+    );
     res.json(result.rows);
   } catch (err) {
     console.error(err);
