@@ -15,7 +15,6 @@ export const StyledContainer = styled.div`
 function App() {
   const isLoggedIn = AuthHelperMethods.loggedIn();
   const [open, setOpen] = useState(false);
-  console.log(isLoggedIn);
   async function getTodos() {
     try {
       await axios
