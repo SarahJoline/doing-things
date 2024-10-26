@@ -6,7 +6,7 @@ import AuthHelperMethods from "../../auth";
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 90vh;
   justify-content: space-between;
 `;
 
