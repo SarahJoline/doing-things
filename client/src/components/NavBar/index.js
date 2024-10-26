@@ -30,7 +30,9 @@ function NavBar({ open, setOpen }) {
   return (
     <StyledHeader>
       {isLoggedIn ? (
-        <IconButton handleClick={() => setOpen(!open)}>Logout</IconButton>
+        <IconButton handleClick={() => AuthHelperMethods.logout("id_token")}>
+          Logout
+        </IconButton>
       ) : (
         <IconButton handleClick={() => setOpen(!open)}>Login</IconButton>
       )}
