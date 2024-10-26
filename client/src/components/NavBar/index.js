@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import AuthHelperMethods from "../../auth";
 import { IconButton } from "../Buttons/IconButton";
 import { PlusIcon } from "../Icons";
 
@@ -24,9 +25,15 @@ export const StyledSpaceHolder = styled.h1`
 `;
 
 function NavBar({ open, setOpen }) {
+  const isLoggedIn = AuthHelperMethods.loggedIn();
+
   return (
     <StyledHeader>
-      <StyledSpaceHolder />
+      {isLoggedIn ? (
+        <IconButton handleClick={() => setOpen(!open)}>Logout</IconButton>
+      ) : (
+        <IconButton handleClick={() => setOpen(!open)}>Login</IconButton>
+      )}
       <StyledTitle>OmList</StyledTitle>
       <IconButton handleClick={() => setOpen(!open)}>
         <PlusIcon width="40" height="40" stroke="white" />
