@@ -21,8 +21,16 @@ export const StyledTitle = styled.h1`
   margin: 0;
 `;
 
-export const StyledSpaceHolder = styled.h1`
+export const StyledLogoutButton = styled.button`
   width: 40px;
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+`;
+
+export const StyledButtonContainer = styled.div`
+  display: flex;
 `;
 
 function NavBar({ open, setOpen }) {
@@ -38,12 +46,14 @@ function NavBar({ open, setOpen }) {
     <StyledHeader>
       <StyledTitle>OmList</StyledTitle>
       {isLoggedIn && (
-        <div>
+        <StyledButtonContainer>
           <IconButton handleClick={() => setOpen(!open)}>
             <PlusIcon width="40" height="40" stroke="white" />
           </IconButton>
-          <IconButton handleClick={() => logout()}>Logout</IconButton>
-        </div>
+          <StyledLogoutButton onClick={() => logout()}>
+            Logout
+          </StyledLogoutButton>
+        </StyledButtonContainer>
       )}
     </StyledHeader>
   );
