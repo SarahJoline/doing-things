@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import AuthHelperMethods from "../../auth";
 import { IconButton } from "../Buttons/IconButton";
@@ -25,14 +26,18 @@ export const StyledSpaceHolder = styled.h1`
 `;
 
 function NavBar({ open, setOpen }) {
+  const navigate = useNavigate();
+
   const isLoggedIn = AuthHelperMethods.loggedIn();
 
+  function logout() {
+    AuthHelperMethods.logout("id_token");
+    navigate("/login");
+  }
   return (
     <StyledHeader>
       {isLoggedIn ? (
-        <IconButton handleClick={() => AuthHelperMethods.logout("id_token")}>
-          Logout
-        </IconButton>
+        <IconButton handleClick={() => logout()}>Logout</IconButton>
       ) : (
         <IconButton handleClick={() => setOpen(!open)}>Login</IconButton>
       )}
