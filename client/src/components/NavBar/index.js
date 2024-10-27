@@ -39,7 +39,7 @@ function NavBar({ open, setOpen }) {
       {isLoggedIn ? (
         <IconButton handleClick={() => logout()}>Logout</IconButton>
       ) : (
-        <IconButton handleClick={() => setOpen(!open)}>Login</IconButton>
+        <StyledSpaceHolder />
       )}
       <StyledTitle>OmList</StyledTitle>
       <IconButton handleClick={() => setOpen(!open)}>
