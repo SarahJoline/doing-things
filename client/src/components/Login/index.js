@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import AuthHelperMethods from "../../auth";
 
 function Login() {
@@ -46,6 +47,8 @@ function Login() {
         </div>
         <button type="submit">Login</button>
       </form>
+      <p>or</p>
+      <Link to="/register">Register</Link>
     </div>
   );
 }
