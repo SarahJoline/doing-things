@@ -1,6 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import {
+  Navigate,
+  Route,
+  BrowserRouter as Router,
+  Routes,
+} from "react-router-dom";
 import styled from "styled-components";
 import "./App.css";
 import AuthHelperMethods from "./auth";
@@ -12,6 +17,10 @@ import NavBar from "./components/NavBar";
 export const StyledContainer = styled.div`
   background-color: aliceblue;
 `;
+
+function ProtectedRoute({ isLoggedIn, children }) {
+  return isLoggedIn ? children : <Navigate to="/login" />;
+}
 
 function App() {
   const isLoggedIn = AuthHelperMethods.loggedIn();
@@ -42,8 +51,15 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute isLoggedIn={isLoggedIn}>
+                <List />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
-        {!!isLoggedIn && <List />}
       </StyledContainer>
     </Router>
   );
