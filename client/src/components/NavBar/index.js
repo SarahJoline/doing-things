@@ -36,15 +36,15 @@ function NavBar({ open, setOpen }) {
   }
   return (
     <StyledHeader>
-      {isLoggedIn ? (
-        <IconButton handleClick={() => logout()}>Logout</IconButton>
-      ) : (
-        <StyledSpaceHolder />
-      )}
       <StyledTitle>OmList</StyledTitle>
-      <IconButton handleClick={() => setOpen(!open)}>
-        <PlusIcon width="40" height="40" stroke="white" />
-      </IconButton>
+      {isLoggedIn && (
+        <div>
+          <IconButton handleClick={() => setOpen(!open)}>
+            <PlusIcon width="40" height="40" stroke="white" />
+          </IconButton>
+          <IconButton handleClick={() => logout()}>Logout</IconButton>
+        </div>
+      )}
     </StyledHeader>
   );
 }
