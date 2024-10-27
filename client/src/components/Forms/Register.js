@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import AuthHelperMethods from "../../auth";
 
@@ -7,7 +8,7 @@ const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   height: 90vh;
-  justify-content: space-between;
+  gap: 20px;
 `;
 
 const StyledLabel = styled.label`
@@ -108,6 +109,8 @@ function Register({ setOpen }) {
       </div>
 
       <StyledButton type="submit">Register</StyledButton>
+      <p>or</p>
+      <Link to="/login">login</Link>
     </StyledForm>
   );
 }
