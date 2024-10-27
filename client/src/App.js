@@ -1,5 +1,4 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Navigate,
   Route,
@@ -25,24 +24,7 @@ function ProtectedRoute({ isLoggedIn, children }) {
 function App() {
   const isLoggedIn = AuthHelperMethods.loggedIn();
   const [open, setOpen] = useState(false);
-  async function getTodos() {
-    try {
-      await axios
-        .request({
-          method: "GET",
-          url: "/api/todos",
-        })
-        .then(({ data }) => {
-          console.log(data);
-        });
-    } catch (e) {
-      console.log(e);
-    }
-  }
 
-  useEffect(() => {
-    getTodos();
-  }, []);
   return (
     <Router>
       <StyledContainer className="App">
