@@ -49,7 +49,7 @@ const StyledButton = styled.button`
   }
 `;
 
-function Register({ setOpen }) {
+function Register() {
   const [email, setUserEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
