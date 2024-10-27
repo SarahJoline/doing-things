@@ -17,11 +17,13 @@ export const StyledList = styled.div`
 function List() {
   const [data, setData] = useState([]);
   async function getTodos() {
+    const token = localStorage.getItem("id_token");
     try {
       await axios
-        .request({
-          method: "GET",
-          url: "/api/todos",
+        .get("/api/todos", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         })
         .then(({ data }) => {
           setData(data);
