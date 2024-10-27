@@ -13,6 +13,10 @@ export const StyledHeader = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
+
+  @media (min-width: 768px) {
+    padding: 0 50px;
+  }
 `;
 
 export const StyledTitle = styled.h1`
@@ -22,7 +26,6 @@ export const StyledTitle = styled.h1`
 `;
 
 export const StyledLogoutButton = styled.button`
-  width: 40px;
   background-color: transparent;
   border: none;
   color: #fff;
