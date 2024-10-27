@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 import styled from "styled-components";
 import AuthHelperMethods from "../../auth";
 
@@ -52,6 +53,7 @@ function Register({ setOpen }) {
   const [email, setUserEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -66,7 +68,7 @@ function Register({ setOpen }) {
       const { data } = await axios.post("/api/user", payload);
 
       AuthHelperMethods.setToken(data.token);
-      setOpen(false);
+      navigate("/");
     } catch (error) {
       console.error("Error during registration:", error);
     }
