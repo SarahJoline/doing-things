@@ -1,9 +1,10 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthHelperMethods from "../../auth";
 
 function Login() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -18,6 +19,7 @@ function Login() {
       const { data } = await axios.post("/api/user/log-in", payload);
 
       AuthHelperMethods.setToken(data.token);
+      navigate("/");
     } catch (error) {
       console.error("Error during login:", error);
     }
