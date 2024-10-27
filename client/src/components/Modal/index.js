@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import styled from "styled-components";
+import AuthHelperMethods from "../../auth";
 import { CloseIcon } from "../Icons";
 
 export const StyledModalBackdrop = styled.div`
@@ -133,13 +134,15 @@ function Modal({ setOpen }) {
       formData.get("subtask-4"),
     ].filter((subtask) => subtask); // filter out any null/empty subtasks
 
-    //TODO: GET USER_ID FROM LOCALSTORAGE
+    const user = AuthHelperMethods.decodeToken(
+      localStorage.getItem("id_token")
+    ).email;
     const payload = {
       name,
       is_recurring,
       progress: 0,
       frequency,
-      user_id: "sarah@example.com",
+      user_id: user,
       subtasks,
     };
 
