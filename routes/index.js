@@ -36,6 +36,48 @@ router.post("/user", async (req, res) => {
   }
 });
 
+router.post("/user/log-in", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const result = await pool.query(`SELECT * FROM users WHERE email = $1`, [
+      email,
+    ]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const user = result.rows[0];
+
+    const isPasswordValid = await bcrypt.compare(
+      password,
+      user.hashed_password
+    );
+
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: "Incorrect password" });
+    }
+
+    const token = jwt.sign(
+      {
+        email: user.email,
+        userID: user.id,
+      },
+      TOKEN,
+      { expiresIn: 129600 } // Token expiration time in seconds (e.g., 36 hours)
+    );
+
+    res.status(200).json({
+      message: "Logged in successfully",
+      token,
+    });
+  } catch (error) {
+    console.error("Error logging in:", error);
+    res.status(500).json({ message: "Error logging in" });
+  }
+});
+
 router.get("/todos", async (req, res) => {
   try {
     const result = await pool.query(
