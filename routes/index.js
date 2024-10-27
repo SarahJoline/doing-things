@@ -5,6 +5,23 @@ const pool = require("../db");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
+async function verify(req, res, next) {
+  var token = req.headers.authorization.split(" ")[1];
+  if (!token) {
+    return res.status(401).send("access denied");
+  }
+  try {
+    const verified = jwt.verify(token, TOKEN);
+
+    req.user = verified;
+
+    next();
+  } catch (err) {
+    console.log("ERROR IN VERIFY!");
+    res.status(400).send("Invalid Token");
+  }
+}
+
 router.post("/user", async (req, res) => {
   const { email, name, password } = req.body;
 
@@ -78,10 +95,13 @@ router.post("/user/log-in", async (req, res) => {
   }
 });
 
-router.get("/todos", async (req, res) => {
+router.get("/todos", verify, async (req, res) => {
+  console.log(req.user.email);
+  const userId = req.user.email;
   try {
     const result = await pool.query(
-      "SELECT todos.*, json_agg(subtasks) AS subtasks FROM todos LEFT JOIN subtasks ON subtasks.todo_id = todos.id GROUP BY todos.id"
+      "SELECT todos.*, json_agg(subtasks) AS subtasks FROM todos LEFT JOIN subtasks ON subtasks.todo_id = todos.id WHERE todos.user_id = $1 GROUP BY todos.id",
+      [userId]
     );
     res.json(result.rows);
   } catch (err) {
